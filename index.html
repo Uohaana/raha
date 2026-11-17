@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0907" />
+  <meta name="description" content="RAHA — Liquid Gold. A fragrance film held in glass." />
+  <title>RAHA — Liquid Gold</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="site-header"><a class="wordmark brand-lockup" href="/" aria-label="RAHA home"><img class="brand-mark" src="/media/raha-logo-mark.svg" alt=""><span>RAHA</span></a><nav class="icon-nav" aria-label="Primary navigation"><a href="/" title="The film" aria-label="The film"><svg class="nav-icon" viewBox="0 0 24 24"><path d="m8 3 10 9-10 9z"/></svg><span>Film</span></a><a href="/collection.html" title="Collection" aria-label="Collection"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg><span>Collection</span></a><a href="/about.html" title="About Yohana" aria-label="About Yohana"><svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 21a7 7 0 0 1 14 0"/></svg><span>About</span></a><a href="/account.html" title="Account" aria-label="Account"><svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Account</span></a></nav><div class="header-actions"><a class="icon-link bag-link" href="/collection.html#cart" title="Bag" aria-label="Bag"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg><span>Bag</span></a></div><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span><span class="sr-only">Open menu</span></button></header>
+  <div id="mobile-menu" class="mobile-menu" aria-hidden="true"><a href="/">Film</a><a href="/collection.html">Collection</a><a href="/about.html">About</a><a href="/account.html">Account</a><a href="/collection.html#cart">Bag</a></div>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-media media-frame" data-depth="0.08"><video autoplay muted loop playsinline poster="/media/raha-liquid-poster.jpg" aria-label="Abstract amber liquid moving in slow motion"><source src="/media/raha-liquid.mp4" type="video/mp4" /></video><div class="vignette"></div></div>
+      
+      <div class="hero-overlay"></div>
+      <div class="hero-light" aria-hidden="true"></div>
+      <div class="hero-copy" data-reveal>
+        <p class="eyebrow">Eau de parfum / 01</p>
+        <h1 id="hero-title">Liquid<br><em>Gold.</em></h1>
+        <p class="hero-intro">A warm, sculptural fragrance that turns the air into an afterimage.</p>
+        <a class="line-cta" data-magnetic href="#film"><span>Enter the film</span><b>↓</b></a>
+      </div>
+      <div class="hero-meta"><span>RAHA / 2026</span><span>35° 41′ N · 51° 25′ E</span><span>Scroll to feel it</span></div>
+      <div class="hero-scroll" aria-hidden="true"><span></span></div>
+    </section>
+
+    <section id="film" class="film-section section-dark">
+      <div class="section-kicker"><span>01</span><span>THE FILM</span></div>
+      <div class="film-grid">
+        <div class="film-copy" data-reveal><p class="eyebrow">A slow burn</p><h2>Not a scent.<br><em>A presence.</em></h2><p class="body-copy">RAHA opens in a ribbon of saffron and rises through amber, suede, and the soft heat of skin. It stays close. Then it doesn’t.</p><a class="text-link" href="#notes">Follow the trail <span>↗</span></a></div>
+        <div class="film-reel media-frame" data-reveal data-depth="0.16"><video autoplay muted loop playsinline poster="/media/raha-product.mp4" aria-label="RAHA perfume bottle suspended in warm light"><source src="/media/raha-product.mp4" type="video/mp4" /></video><div class="media-caption"><span>Still / 02</span><span>Amber in motion</span></div></div>
+      </div>
+    </section>
+
+    <section id="notes" class="notes-section section-amber">
+      <div class="section-kicker dark-kicker"><span>02</span><span>THE NOTES</span></div>
+      <div class="notes-heading" data-reveal><p class="eyebrow">An olfactive architecture</p><h2>Three temperatures.<br><em>One trail.</em></h2></div>
+      <div class="notes-list">
+        <article class="note-row" data-reveal><span class="note-index">01</span><div><h3>Top / Saffron air</h3><p>Bright spice, citrus peel, a first flash of heat.</p></div><span class="note-line"></span><span class="note-temp">Bright</span></article>
+        <article class="note-row" data-reveal><span class="note-index">02</span><div><h3>Heart / Amber skin</h3><p>Resinous warmth, osmanthus, polished suede.</p></div><span class="note-line"></span><span class="note-temp">Warm</span></article>
+        <article class="note-row" data-reveal><span class="note-index">03</span><div><h3>Base / Dark woods</h3><p>Smoked vetiver, dry cedar, a lingering hush.</p></div><span class="note-line"></span><span class="note-temp">Deep</span></article>
+      </div>
+      <div class="notes-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+    </section>
+
+    <section class="object-section section-dark" id="shop">
+      <div class="object-media media-frame" data-depth="0.12"><video autoplay muted loop playsinline poster="/media/raha-stone.mp4" aria-label="RAHA perfume bottle in a monolithic gallery"><source src="/media/raha-stone.mp4" type="video/mp4" /></video></div>
+      <div class="object-copy" data-reveal><p class="eyebrow">The object / 50ml</p><h2>Held in<br><em>glass.</em></h2><p class="body-copy">A weighty bottle. A black cap. A pool of amber that catches the last light in the room.</p><div class="object-details"><span>50 ml / 1.69 fl oz</span><span>Parfum concentration</span><span>Made in small runs</span></div><button class="button-primary" data-magnetic type="button" id="discover-button">Discover RAHA <span>↗</span></button></div>
+    </section>
+
+    <section id="story" class="story-section section-paper">
+      <div class="section-kicker"><span>03</span><span>THE STORY</span></div>
+      <div class="story-grid"><p class="story-display" data-reveal>“Somewhere between shadow and skin, <em>RAHA begins.</em>”</p><div class="story-copy" data-reveal><p class="eyebrow">Made for the hour after midnight</p><p>We built RAHA around contrast: a flash of spice against a dark room, liquid light against stone, something remembered before it is understood.</p><p>Wear it close. Let it find its own distance.</p><a class="text-link dark-link" href="#top">Back to the beginning <span>↑</span></a></div></div>
+    </section>
+
+    <footer class="site-footer"><div class="footer-mark"><span class="wordmark-mark">|</span> RAHA</div><div><span class="eyebrow">Liquid Gold / 01</span><p>For those who leave a trace.</p></div><div class="footer-links"><a href="#film">Film</a><a href="/collection.html">Collection</a><a href="/about.html">About</a><a href="/account.html">Account</a></div><small>© RAHA 2026</small><p class="noncommercial">Portfolio demonstration only — not a commercial work.</p></footer>
+  </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="/supabase-config.js"></script><script src="/script.js"></script><script src="/favorites.js"></script>
+  </body>
+</html>

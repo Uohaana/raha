@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RAHA — Stock</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="admin-page stock-page">
+  <header class="site-header">
+    <a class="wordmark brand-lockup" href="/" aria-label="RAHA home"><img class="brand-mark" src="/media/raha-logo-mark.svg" alt=""><span>RAHA</span></a>
+    <nav class="icon-nav" aria-label="Primary navigation"><a href="/">Film</a><a href="/collection.html">Collection</a><a href="/about.html">About</a><a href="/account.html">Account</a></nav>
+    <span class="admin-label">STUDIO / STOCK</span>
+  </header>
+  <main class="admin-shell">
+    <section id="login-panel" class="admin-login">
+      <p class="eyebrow">Authorized access only</p>
+      <h1>Stock<br><em>control.</em></h1>
+      <p class="admin-help">Use the confirmed RAHA admin account to view and update inventory.</p>
+      <form id="login-form"><label>Email<input id="email" type="email" value="uohananashaat@gmail.com" required autocomplete="username"></label><label>Password<input id="password" type="password" required autocomplete="current-password"></label><button class="button-primary" type="submit">Sign in <span>↗</span></button><button class="text-link" id="reset-button" type="button">Send password reset email</button><p id="login-error" class="form-error" role="alert"></p></form>
+    </section>
+    <section id="stock-dashboard" hidden>
+      <div class="dashboard-top"><div><p class="eyebrow">RAHA / inventory</p><h1>Stock<br><em>room.</em></h1></div><div class="stock-actions"><a class="text-link" href="/studio-vault-9x.html">Overview</a><button id="logout" class="text-link" type="button">Sign out</button></div></div>
+      <div class="stats"><div><span>LIVE SKUs</span><strong id="sku-count">—</strong></div><div><span>UNITS IN STOCK</span><strong id="stock-count">—</strong></div><div><span>LOW STOCK / &lt;15</span><strong id="low-count">—</strong></div></div>
+      <div class="stock-toolbar"><label class="stock-search"><span class="sr-only">Search stock</span><input id="stock-search" type="search" placeholder="Search perfume or note" autocomplete="off"></label><label class="stock-filter">View<select id="stock-filter"><option value="all">All products</option><option value="low">Low stock</option><option value="out">Out of stock</option></select></label></div>
+      <p id="stock-message" class="form-message" role="status"></p>
+      <div class="admin-table-wrap"><table class="stock-table"><thead><tr><th>Perfume</th><th>Status</th><th>Price</th><th>Units</th><th>Reorder</th><th>Update</th></tr></thead><tbody id="stock-rows"></tbody></table></div>
+    </section>
+  </main>
+  <footer class="site-footer"><p class="noncommercial">Private studio · noindex</p></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/supabase-config.js"></script>
+  <script>
+    const client = supabase.createClient(RAHA_SUPABASE_URL, RAHA_SUPABASE_ANON_KEY);
+    const login = document.querySelector('#login-panel'); const dashboard = document.querySelector('#stock-dashboard'); const errorMessage = document.querySelector('#login-error'); const emailInput = document.querySelector('#email'); const passwordInput = document.querySelector('#password'); const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char])); let products=[];
+    const showError = message => { errorMessage.textContent = message; };
+    document.querySelector('#reset-button').addEventListener('click', async () => { const { error } = await client.auth.resetPasswordForEmail(emailInput.value.trim(), { redirectTo: `${location.origin}/stock.html` }); showError(error ? error.message : 'Password reset email sent.'); });
+    document.querySelector('#login-form').addEventListener('submit', async event => { event.preventDefault(); const { error } = await client.auth.signInWithPassword({ email: emailInput.value.trim(), password: passwordInput.value }); if (error) return showError(error.message); passwordInput.value=''; await loadStock(); });
+    async function loadStock(){ const {data,error}=await client.from('perfumes').select('id,name,slug,tagline,notes,price,stock,status').order('created_at',{ascending:true}).limit(100); if(error)return showError(error.message); products=data||[]; login.hidden=true; dashboard.hidden=false; render(); }
+    function render(){ const query=document.querySelector('#stock-search').value.trim().toLowerCase(); const filter=document.querySelector('#stock-filter').value; const rows=products.filter(p=>{ const hay=`${p.name} ${p.tagline} ${p.notes}`.toLowerCase(); return (!query||hay.includes(query))&&(filter==='all'||(filter==='low'&&Number(p.stock)<15)||(filter==='out'&&Number(p.stock)<=0)); }); document.querySelector('#sku-count').textContent=products.filter(p=>p.status==='published').length; document.querySelector('#stock-count').textContent=products.reduce((sum,p)=>sum+Number(p.stock||0),0); document.querySelector('#low-count').textContent=products.filter(p=>Number(p.stock)<15).length; document.querySelector('#stock-rows').innerHTML=rows.map(p=>`<tr class="${Number(p.stock)<15?'is-low':''}"><td><strong>${esc(p.name)}</strong><small>${esc(p.notes)}</small></td><td>${esc(p.status)}</td><td>$${Number(p.price).toFixed(0)}</td><td><input class="stock-input" data-stock-id="${esc(p.id)}" type="number" min="0" max="9999" value="${Number(p.stock)}" aria-label="${esc(p.name)} units"></td><td><span class="reorder-badge ${Number(p.stock)<15?'needs-reorder':''}">${Number(p.stock)<15?'Review':'Healthy'}</span></td><td><button class="save-row" data-save-id="${esc(p.id)}" type="button">Save</button></td></tr>`).join('')||'<tr><td colspan="6">No products match that view.</td></tr>'; document.querySelectorAll('[data-save-id]').forEach(button=>button.addEventListener('click',()=>saveStock(button.dataset.saveId,button))); }
+    async function saveStock(id,button){ const input=document.querySelector(`[data-stock-id="${CSS.escape(id)}"]`); const stock=Math.max(0,Math.min(9999,Number(input.value)||0)); button.disabled=true; const {error}=await client.from('perfumes').update({stock}).eq('id',id); button.disabled=false; if(error)return document.querySelector('#stock-message').textContent=error.message; const product=products.find(p=>p.id===id); if(product)product.stock=stock; document.querySelector('#stock-message').textContent=`${product?.name||'Stock'} updated to ${stock} units.`; render(); }
+    document.querySelector('#stock-search').addEventListener('input',render); document.querySelector('#stock-filter').addEventListener('change',render); document.querySelector('#logout').addEventListener('click',async()=>{await client.auth.signOut();location.reload();}); client.auth.getSession().then(({data})=>{if(data.session)loadStock();});
+  </script>
+</body>
+</html>
