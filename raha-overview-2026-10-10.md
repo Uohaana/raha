@@ -35,39 +35,39 @@ The final live stock test loaded 30 rows, 595 total units, and 6 low-stock produ
 
 ### `public.perfumes`
 
-| Column | Purpose |
-|---|---|
-| `id` | UUID primary key |
-| `slug` | Unique route/catalog identifier |
-| `name` | Fragrance name |
-| `tagline` | Short product positioning |
-| `notes` | Fragrance notes |
-| `price` | Numeric price |
-| `image_url` | Published product asset path |
-| `stock` | Inventory quantity |
-| `status` | `draft`, `published`, or `archived` |
-| `created_at` | Creation timestamp |
+| Column       | Purpose                             |
+| ------------ | ----------------------------------- |
+| `id`         | UUID primary key                    |
+| `slug`       | Unique route/catalog identifier     |
+| `name`       | Fragrance name                      |
+| `tagline`    | Short product positioning           |
+| `notes`      | Fragrance notes                     |
+| `price`      | Numeric price                       |
+| `image_url`  | Published product asset path        |
+| `stock`      | Inventory quantity                  |
+| `status`     | `draft`, `published`, or `archived` |
+| `created_at` | Creation timestamp                  |
 
 ### `public.admin_profiles`
 
-| Column | Purpose |
-|---|---|
-| `id` | UUID linked to `auth.users(id)` |
-| `display_name` | Admin display name |
-| `role` | `admin` or `editor` |
-| `created_at` | Creation timestamp |
+| Column         | Purpose                         |
+| -------------- | ------------------------------- |
+| `id`           | UUID linked to `auth.users(id)` |
+| `display_name` | Admin display name              |
+| `role`         | `admin` or `editor`             |
+| `created_at`   | Creation timestamp              |
 
 ### `public.orders`
 
-| Column | Purpose |
-|---|---|
-| `id` | UUID order identifier |
-| `user_id` | Authenticated customer owner |
-| `email` | Customer email captured at order time |
-| `total` | Calculated order total |
-| `status` | `pending`, `confirmed`, `packed`, `shipped`, `completed`, or `cancelled` |
-| `shipping` | JSON shipping name/address payload |
-| `created_at` | Order timestamp |
+| Column       | Purpose                                                                  |
+| ------------ | ------------------------------------------------------------------------ |
+| `id`         | UUID order identifier                                                    |
+| `user_id`    | Authenticated customer owner                                             |
+| `email`      | Customer email captured at order time                                    |
+| `total`      | Calculated order total                                                   |
+| `status`     | `pending`, `confirmed`, `packed`, `shipped`, `completed`, or `cancelled` |
+| `shipping`   | JSON shipping name/address payload                                       |
+| `created_at` | Order timestamp                                                          |
 
 ### `public.order_items`
 
@@ -81,13 +81,13 @@ Stores one review per customer/product pair through a unique constraint. Ratings
 
 The live database currently reports:
 
-| Metric | Count/value |
-|---|---:|
-| Published perfumes | 30 |
-| Total published stock | 595 |
-| Approved reviews | 14 |
-| Existing orders | 1 |
-| Admin/editor profiles | 1 |
+| Metric                | Count/value |
+| --------------------- | ----------: |
+| Published perfumes    |          30 |
+| Total published stock |         595 |
+| Approved reviews      |          14 |
+| Existing orders       |           1 |
+| Admin/editor profiles |           1 |
 
 The one remaining order is the existing QA order. Temporary checkout orders from the live tests were deleted after each test and inventory was restored.
 
@@ -169,20 +169,20 @@ Tested against:
 
 Results:
 
-| Test | Result |
-|---|---|
-| Existing account sign-in | Passed |
-| Product detail route | Passed |
-| Add Nocturne to bag | Passed |
-| Cart drawer opens | Passed |
-| Cart contains correct item | Passed |
-| Supabase checkout RPC | Passed |
-| Order confirmation returned | Passed |
-| Cart cleared after checkout | Passed |
-| Admin stock login | Passed |
-| Admin dashboard data | Passed |
-| 30 stock rows rendered | Passed |
-| Frontend HTTP errors during test | None |
+| Test                             | Result |
+| -------------------------------- | ------ |
+| Existing account sign-in         | Passed |
+| Product detail route             | Passed |
+| Add Nocturne to bag              | Passed |
+| Cart drawer opens                | Passed |
+| Cart contains correct item       | Passed |
+| Supabase checkout RPC            | Passed |
+| Order confirmation returned      | Passed |
+| Cart cleared after checkout      | Passed |
+| Admin stock login                | Passed |
+| Admin dashboard data             | Passed |
+| 30 stock rows rendered           | Passed |
+| Frontend HTTP errors during test | None   |
 
 The final test created temporary order `c74bc992-e5b5-436e-8980-e179c9bc7c59`, reduced Nocturne stock from 23 to 22, confirmed the admin dashboard, restored stock to 23 through the admin UI, and deleted the temporary order. The final Supabase check reported `temporary_order_count = 0` and Nocturne stock `= 23`.
 

@@ -1,88 +1,138 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="robots" content="noindex,nofollow,noarchive">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>RAHA — Private Studio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
-</head>
-<body class="admin-page">
-  <header class="site-header">
-    <a class="wordmark brand-lockup" href="/" aria-label="RAHA home"><img class="brand-mark" src="/media/raha-logo-mark.svg" alt=""><span>RAHA</span></a>
-    <nav class="icon-nav" aria-label="Primary navigation"><a href="/">Film</a><a href="/collection.html">Collection</a><a href="/about.html">About</a><a href="/account.html">Account</a></nav>
-    <span class="admin-label">STUDIO / PRIVATE</span>
-  </header>
-  <main class="admin-shell">
-    <section id="login-panel" class="admin-login">
-      <p class="eyebrow">Authorized access only</p>
-      <h1>Studio<br><em>control.</em></h1>
-      <p class="admin-help">Sign in with the confirmed RAHA admin account. Passwords are never stored or displayed in this interface.</p>
-      <form id="login-form">
-        <label>Email<input id="email" type="email" value="uohananashaat@gmail.com" required autocomplete="username"></label>
-        <label>Password<input id="password" type="password" required autocomplete="current-password"></label>
-        <button class="button-primary" type="submit">Sign in <span>↗</span></button>
-        <button class="text-link" id="reset-button" type="button">Send password reset email</button>
-        <p id="login-error" class="form-error" role="alert"></p>
-      </form>
-    </section>
-    <section id="dashboard" class="dashboard" hidden>
-      <div class="dashboard-top"><div><p class="eyebrow">RAHA / studio</p><h1>Good evening,<br><em>studio.</em></h1></div><button id="logout" class="text-link">Sign out</button></div>
-      <nav class="admin-tabs" aria-label="Studio sections"><a class="admin-tab active" href="/studio-vault-9x.html">Overview</a><a class="admin-tab" href="/stock.html">Stock page ↗</a></nav>
-      <div class="stats"><div><span>LIVE SKUs</span><strong id="sku-count">—</strong></div><div><span>UNITS IN STOCK</span><strong id="stock-count">—</strong></div><div><span>LOW STOCK</span><strong id="low-count">—</strong></div></div>
-      <div class="admin-table-wrap"><table><thead><tr><th>Perfume</th><th>Status</th><th>Price</th><th>Stock</th><th>Update</th></tr></thead><tbody id="product-rows"></tbody></table></div>
-      <div class="admin-ops"><section><p class="eyebrow">RAHA / fulfilment</p><h2>Orders.</h2><div class="admin-table-wrap"><table><thead><tr><th>Order</th><th>Status</th><th>Total</th></tr></thead><tbody id="order-rows"></tbody></table></div></section><section><p class="eyebrow">RAHA / community</p><h2>Reviews.</h2><div class="admin-table-wrap"><table><thead><tr><th>Review</th><th>Status</th><th>Update</th></tr></thead><tbody id="review-rows"></tbody></table></div></section></div>
-    </section>
-  </main>
-  <footer class="site-footer"><p class="noncommercial">Private studio · noindex</p></footer>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/supabase-config.js"></script>
-  <script>
-    const client = supabase.createClient(RAHA_SUPABASE_URL, RAHA_SUPABASE_ANON_KEY);
-    const login = document.querySelector('#login-panel');
-    const dashboard = document.querySelector('#dashboard');
-    const errorMessage = document.querySelector('#login-error');
-    const emailInput = document.querySelector('#email');
-    const passwordInput = document.querySelector('#password');
-    const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-    const showError = message => { errorMessage.textContent = message; };
-    document.querySelector('#reset-button').addEventListener('click', async () => {
-      const email = emailInput.value.trim();
-      if (!email) return showError('Enter your admin email first.');
-      const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: `${location.origin}/studio-vault-9x.html` });
-      showError(error ? error.message : 'Password reset email sent. Check the inbox for the admin account.');
-    });
-    document.querySelector('#login-form').addEventListener('submit', async event => {
-      event.preventDefault();
-      const { error } = await client.auth.signInWithPassword({ email: emailInput.value.trim(), password: passwordInput.value });
-      if (error) return showError(error.message);
-      passwordInput.value = '';
-      await showDashboard();
-    });
-    async function showDashboard() {
-      login.hidden = true; dashboard.hidden = false;
-      const { data, error } = await client.from('perfumes').select('id,name,tagline,price,stock,status').order('created_at', { ascending: true }).limit(100);
-      if (error) return showError(error.message);
-      const rows = data || [];
-      document.querySelector('#sku-count').textContent = rows.filter(row => row.status === 'published').length;
-      document.querySelector('#stock-count').textContent = rows.reduce((total, row) => total + Number(row.stock || 0), 0);
-      document.querySelector('#low-count').textContent = rows.filter(row => Number(row.stock) < 15).length;
-      document.querySelector('#product-rows').innerHTML = rows.map(product => `<tr><td><strong>${esc(product.name)}</strong><small>${esc(product.tagline)}</small></td><td>${esc(product.status)}</td><td>$${Number(product.price).toFixed(0)}</td><td>${Number(product.stock)}</td><td><a class="save-row" href="/stock.html">Manage</a></td></tr>`).join('');
-      await loadOperations();
-    }
-    async function loadOperations() {
-      const [{ data: orders }, { data: reviews }] = await Promise.all([
-        client.from('orders').select('id,email,total,status').order('created_at', { ascending: false }).limit(50),
-        client.from('reviews').select('id,title,rating,status,perfumes(name)').order('created_at', { ascending: false }).limit(50)
-      ]);
-      document.querySelector('#order-rows').innerHTML = (orders || []).map(order => `<tr><td><strong>${esc(order.id.slice(0, 8))}</strong><small>${esc(order.email)}</small></td><td>${esc(order.status)}</td><td>$${Number(order.total).toFixed(0)}</td></tr>`).join('') || '<tr><td colspan="3">No orders yet.</td></tr>';
-      document.querySelector('#review-rows').innerHTML = (reviews || []).map(review => `<tr><td><strong>${esc(review.title)}</strong><small>${esc(review.perfumes?.name || 'RAHA')} · ${Number(review.rating)}/5</small></td><td>${esc(review.status)}</td><td><a class="save-row" href="/stock.html">Open</a></td></tr>`).join('') || '<tr><td colspan="3">No reviews yet.</td></tr>';
-    }
-    document.querySelector('#logout').addEventListener('click', async () => { await client.auth.signOut(); location.reload(); });
-    client.auth.getSession().then(({ data }) => { if (data.session) showDashboard(); });
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>RAHA — Private Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="admin-page">
+    <header class="site-header">
+      <a class="wordmark brand-lockup" href="/" aria-label="RAHA home"
+        ><img class="brand-mark" src="/media/raha-logo-mark.svg" alt="" /><span
+          >RAHA</span
+        ></a
+      >
+      <nav class="icon-nav" aria-label="Primary navigation">
+        <a href="/">Film</a><a href="/collection.html">Collection</a
+        ><a href="/about.html">About</a><a href="/account.html">Account</a>
+      </nav>
+      <span class="admin-label">STUDIO / PRIVATE</span>
+    </header>
+    <main class="admin-shell">
+      <section id="login-panel" class="admin-login">
+        <p class="eyebrow">Authorized access only</p>
+        <h1>Studio<br /><em>control.</em></h1>
+        <p class="admin-help">
+          Sign in with the confirmed RAHA admin account. Passwords are never
+          stored or displayed in this interface.
+        </p>
+        <form id="login-form">
+          <label
+            >Email<input
+              id="email"
+              type="email"
+              value="uohananashaat@gmail.com"
+              required
+              autocomplete="username"
+          /></label>
+          <label
+            >Password<input
+              id="password"
+              type="password"
+              required
+              autocomplete="current-password"
+          /></label>
+          <button class="button-primary" type="submit">
+            Sign in <span>↗</span>
+          </button>
+          <button class="text-link" id="reset-button" type="button">
+            Send password reset email
+          </button>
+          <p id="login-error" class="form-error" role="alert"></p>
+        </form>
+      </section>
+      <section id="dashboard" class="dashboard" hidden>
+        <div class="dashboard-top">
+          <div>
+            <p class="eyebrow">RAHA / studio</p>
+            <h1>Good evening,<br /><em>studio.</em></h1>
+          </div>
+          <button id="logout" class="text-link">Sign out</button>
+        </div>
+        <nav class="admin-tabs" aria-label="Studio sections">
+          <a class="admin-tab active" href="/studio-vault-9x.html">Overview</a
+          ><a class="admin-tab" href="/stock.html">Stock page ↗</a>
+        </nav>
+        <div class="stats">
+          <div><span>LIVE SKUs</span><strong id="sku-count">—</strong></div>
+          <div>
+            <span>UNITS IN STOCK</span><strong id="stock-count">—</strong>
+          </div>
+          <div><span>LOW STOCK</span><strong id="low-count">—</strong></div>
+        </div>
+        <div class="admin-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Perfume</th>
+                <th>Status</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Update</th>
+              </tr>
+            </thead>
+            <tbody id="product-rows"></tbody>
+          </table>
+        </div>
+        <div class="admin-ops">
+          <section>
+            <p class="eyebrow">RAHA / fulfilment</p>
+            <h2>Orders.</h2>
+            <div class="admin-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Order</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody id="order-rows"></tbody>
+              </table>
+            </div>
+          </section>
+          <section>
+            <p class="eyebrow">RAHA / community</p>
+            <h2>Reviews.</h2>
+            <div class="admin-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Review</th>
+                    <th>Status</th>
+                    <th>Update</th>
+                  </tr>
+                </thead>
+                <tbody id="review-rows"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <p class="noncommercial">Private studio · noindex</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/supabase-config.js"></script>
+    <script src="/studio.js"></script>
+  </body>
 </html>

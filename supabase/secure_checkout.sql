@@ -1,9 +1,6 @@
-create or replace function public.place_order(p_items jsonb, p_shipping jsonb)
-returns table(order_id uuid, total numeric)
-language plpgsql
-security definer
-set search_path = public
-as $$
+create or replace function public.place_order (p_items jsonb, p_shipping jsonb) returns table (order_id uuid, total numeric) language plpgsql security definer
+set
+  search_path = public as $$
 declare
   v_user_id uuid := auth.uid();
   v_email text;
@@ -32,10 +29,29 @@ begin
   return query select v_order_id, v_total;
 end;
 $$;
-revoke all on function public.place_order(jsonb, jsonb) from public;
-revoke execute on function public.place_order(jsonb, jsonb) from anon;
-grant execute on function public.place_order(jsonb, jsonb) to authenticated;
+
+revoke all on function public.place_order (jsonb, jsonb)
+from
+  public;
+
+revoke
+execute on function public.place_order (jsonb, jsonb)
+from
+  anon;
+
+grant
+execute on function public.place_order (jsonb, jsonb) to authenticated;
+
 drop policy if exists "customers create own orders" on public.orders;
+
 drop policy if exists "customers create own order items" on public.order_items;
-revoke insert on public.orders from anon, authenticated;
-revoke insert on public.order_items from anon, authenticated;
+
+revoke insert on public.orders
+from
+  anon,
+  authenticated;
+
+revoke insert on public.order_items
+from
+  anon,
+  authenticated;

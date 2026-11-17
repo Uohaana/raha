@@ -28,6 +28,19 @@ Apply `supabase/schema.sql` to the RAHA Supabase project, then apply `supabase/f
 
 At the time of this package export, the connected RAHA Supabase project was inactive, so the favourites migration is included and ready to apply when the project is resumed.
 
+## Code organization
+
+The page controllers live in named modules instead of large inline scripts:
+
+- `account.js` — authentication, password reset, orders, and favourites.
+- `collection.js` — catalog loading, filters, reviews, favourites, cart, and checkout.
+- `product-page.js` — individual product pages, comments, favourites, cart, and checkout.
+- `stock.js` — protected inventory search, filtering, and updates.
+- `studio.js` — protected catalog, order, and review overview.
+- `favorites.js` — shared authenticated navigation and favourite state.
+
+HTML, JavaScript, CSS, JSON, Markdown, and SQL are formatted consistently. The source favors named functions, small responsibilities, explicit loading states, escaped user content, and comments at module boundaries.
+
 ## GitHub and deployment
 
-The project is intended for `Uohaana/raha-liquid-gold` with Vercel serving the root static site. The private admin pages are `/studio-vault-9x.html` and `/stock.html`; they are not indexed and require Supabase authentication.
+The project is stored in [`Uohaana/raha`](https://github.com/Uohaana/raha), with Vercel serving the root static site. The private admin pages are `/studio-vault-9x.html` and `/stock.html`; they are not indexed and require Supabase authentication.
