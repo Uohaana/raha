@@ -11,54 +11,34 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/humanized-overrides.css" />
+    <link rel="stylesheet" href="/icon-system.css" />
   </head>
   <body class="collection-page">
     <header class="site-header">
-      <a class="wordmark brand-lockup" href="/" aria-label="RAHA home"
-        ><img class="brand-mark" src="/media/raha-logo-mark.svg" alt="" /><span
-          >RAHA</span
-        ></a
-      >
+      <a class="wordmark brand-lockup" href="/" aria-label="RAHA home">
+        <img class="brand-mark" src="/media/raha-monogram.svg" alt="" />
+        <span class="brand-word">RAHA</span>
+      </a>
       <nav class="icon-nav" aria-label="Primary navigation">
-        <a href="/" title="The film" aria-label="The film"
-          ><svg class="nav-icon" viewBox="0 0 24 24">
-            <path d="m8 3 10 9-10 9z" /></svg
-          ><span>Film</span></a
-        >
-        <a href="/collection.html" title="Collection" aria-label="Collection"
-          ><svg class="nav-icon" viewBox="0 0 24 24">
-            <path d="M5 8h14l-1 12H6L5 8Z" />
-            <path d="M9 8a3 3 0 0 1 6 0" /></svg
-          ><span>Collection</span></a
-        >
-        <a href="/about.html" title="About Yohana" aria-label="About Yohana"
-          ><svg class="nav-icon" viewBox="0 0 24 24">
-            <circle cx="12" cy="8" r="3" />
-            <path d="M5 21a7 7 0 0 1 14 0" /></svg
-          ><span>About</span></a
-        >
-        <a href="/account.html" title="Account" aria-label="Account"
-          ><svg class="nav-icon" viewBox="0 0 24 24">
-            <circle cx="12" cy="8" r="3" />
-            <path d="M4 21a8 8 0 0 1 16 0" /></svg
-          ><span>Account</span></a
-        >
+        <a href="/" title="The film">Film</a>
+        <a href="/collection.html" title="Collection">Shop scents</a>
+        <a href="/about.html" title="About Yohana">Our house</a>
+        <a href="/account.html" title="Account">Account</a>
       </nav>
       <div class="header-actions">
         <a
           class="icon-link bag-link"
-          href="#cart"
+          href="/collection.html#cart"
           title="Bag"
           aria-label="Open bag"
-          ><svg class="nav-icon" viewBox="0 0 24 24">
-            <path d="M5 8h14l-1 12H6L5 8Z" />
-            <path d="M9 8a3 3 0 0 1 6 0" /></svg
-          ><span>Bag <b id="cart-count">0</b></span></a
         >
+          <span>Bag</span><b id="cart-count">0</b>
+        </a>
       </div>
       <button
         class="menu-toggle"
@@ -77,20 +57,18 @@
     </div>
     <main>
       <section class="collection-hero collection-hero-expanded">
-        <p class="eyebrow">The collection / 2026</p>
-        <h1>Find your<br /><em>trace.</em></h1>
+        <p class="eyebrow">The scents / 2026</p>
+        <h1>Find the one<br /><em>that feels like you.</em></h1>
         <div class="collection-intro-row">
-          <p>
-            Thirty compositions. Thirty different ways to stay in the room after
-            you leave it.
-          </p>
+          <p>Thirty scents, each with its own way of settling on skin.</p>
           <span class="collection-count"
             >30 <small>SCULPTURAL<br />FRAGRANCES</small></span
           >
         </div>
         <div class="collection-rail">
-          <span>01 — 30</span><span>Every bottle is an original RAHA study</span
-          ><span>Scroll to explore ↓</span>
+          <span>01 — 30</span
+          ><span>Small-batch compositions, made to be worn</span
+          ><span>Browse at your own pace</span>
         </div>
       </section>
       <section class="collection-controls" aria-label="Collection filters">
@@ -99,7 +77,7 @@
           ><input
             id="collection-search"
             type="search"
-            placeholder="Search the collection"
+            placeholder="Search by name or note"
             autocomplete="off"
         /></label>
         <div
@@ -130,8 +108,8 @@
         aria-live="polite"
       ></section>
       <section class="collection-proof">
-        <p class="eyebrow">A collection with a point of view</p>
-        <h2>Choose the one<br /><em>that stays.</em></h2>
+        <p class="eyebrow">A considered collection</p>
+        <h2>Choose the one<br /><em>you keep reaching for.</em></h2>
         <p>
           Every RAHA composition is built around a different texture — smoke,
           silk, mineral, petal, wood. Ratings below come from the people who
@@ -141,11 +119,11 @@
     </main>
     <footer class="site-footer">
       <div class="footer-mark brand-lockup">
-        <img class="brand-mark" src="/media/raha-logo-mark.svg" alt="" /><span
+        <img class="brand-mark" src="/media/raha-monogram.svg" alt="" /><span
           >RAHA</span
         >
       </div>
-      <p>For those who leave a trace.</p>
+      <p>For people who notice the details.</p>
       <div class="footer-links">
         <a href="/">Film</a><a href="/about.html">About</a
         ><a href="/account.html">Account</a>
@@ -159,7 +137,7 @@
       aria-labelledby="cart-title"
     >
       <div class="cart-head">
-        <p class="eyebrow" id="cart-title">Your ritual / bag</p>
+        <p class="eyebrow" id="cart-title">Your bag</p>
         <button id="cart-close" class="text-link" type="button">Close</button>
       </div>
       <div id="cart-items"></div>
@@ -167,7 +145,8 @@
         <span>Estimated total</span><strong id="cart-total">$0</strong>
       </div>
       <p class="cart-security">
-        Final total and stock are rechecked securely when you place the order.
+        We check the final total and availability again when you place your
+        order.
       </p>
       <form id="checkout-form" class="checkout-form">
         <p class="eyebrow">Delivery details</p>
@@ -186,7 +165,7 @@
           maxlength="300"
           required
         /><button class="button-primary" type="submit">
-          Place order <span>↗</span>
+          Place your order <span class="arrow-mark" aria-hidden="true"></span>
         </button>
         <p id="checkout-message" class="form-error" role="status"></p>
       </form>
@@ -201,20 +180,21 @@
         <button class="modal-close text-link" id="review-close" type="button">
           Close
         </button>
-        <p class="eyebrow">Leave a trace</p>
-        <h2 id="review-title">Review the scent.</h2>
+        <p class="eyebrow">Tell us what you noticed</p>
+        <h2 id="review-title">What did you notice?</h2>
         <form id="review-form">
           <input type="hidden" id="review-perfume-id" />
           <div class="rating-input" aria-label="Rating">
-            <button type="button" data-rating="1" aria-label="1 star">★</button
-            ><button type="button" data-rating="2" aria-label="2 stars">
-              ★</button
-            ><button type="button" data-rating="3" aria-label="3 stars">
-              ★</button
-            ><button type="button" data-rating="4" aria-label="4 stars">
-              ★</button
-            ><button type="button" data-rating="5" aria-label="5 stars">
-              ★
+            <button type="button" data-rating="1" aria-label="1 out of 5">
+              <span class="rating-dot" aria-hidden="true"></span></button
+            ><button type="button" data-rating="2" aria-label="2 out of 5">
+              <span class="rating-dot" aria-hidden="true"></span></button
+            ><button type="button" data-rating="3" aria-label="3 out of 5">
+              <span class="rating-dot" aria-hidden="true"></span></button
+            ><button type="button" data-rating="4" aria-label="4 out of 5">
+              <span class="rating-dot" aria-hidden="true"></span></button
+            ><button type="button" data-rating="5" aria-label="5 out of 5">
+              <span class="rating-dot" aria-hidden="true"></span>
             </button>
           </div>
           <label class="sr-only" for="review-title-input">Review title</label
@@ -232,7 +212,7 @@
             required
           ></textarea
           ><button class="button-primary" type="submit">
-            Send review <span>↗</span>
+            Send your note <span class="arrow-mark" aria-hidden="true"></span>
           </button>
           <p id="review-message" class="form-error" role="status"></p>
         </form>

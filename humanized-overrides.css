@@ -1,0 +1,339 @@
+/* Humanized visual layer: keep commerce behavior in the existing styles and scripts. */
+:root {
+  --black: #100d0a;
+  --ink: #1d1712;
+  --paper: #eee5d6;
+  --gold: #dca24e;
+  --muted: #b7aa98;
+  --line: rgba(238, 229, 214, 0.16);
+  --warm-glow: rgba(220, 162, 78, 0.2);
+}
+body {
+  background:
+    radial-gradient(
+      circle at 85% 6%,
+      rgba(220, 162, 78, 0.08),
+      transparent 22rem
+    ),
+    var(--black);
+}
+.site-header {
+  height: 72px;
+  padding-inline: clamp(20px, 4vw, 58px);
+  background: linear-gradient(
+    180deg,
+    rgba(16, 13, 10, 0.76),
+    rgba(16, 13, 10, 0.18)
+  );
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  mix-blend-mode: normal;
+  border-bottom-color: rgba(238, 229, 214, 0.1);
+}
+.brand-lockup {
+  transition: transform 280ms ease;
+}
+.brand-lockup:hover {
+  transform: translateY(-1px);
+}
+.hero-copy {
+  max-width: 660px;
+}
+.hero h1 {
+  text-wrap: balance;
+}
+.hero-light {
+  opacity: 0.7;
+  filter: blur(30px);
+  background: radial-gradient(
+    circle,
+    rgba(220, 162, 78, 0.18),
+    transparent 64%
+  );
+}
+.line-cta,
+.button-primary,
+.filter-chip,
+.favorite-button,
+.text-link {
+  transition:
+    color 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease,
+    transform 220ms ease;
+}
+.line-cta:hover,
+.text-link:hover {
+  transform: translateX(4px);
+}
+.button-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(220, 162, 78, 0.16);
+}
+.collection-hero {
+  min-height: 54vh;
+  padding-top: 13vh;
+  background:
+    radial-gradient(
+      circle at 80% 18%,
+      rgba(220, 162, 78, 0.28),
+      transparent 28%
+    ),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.02), transparent 45%);
+}
+.collection-hero h1 {
+  max-width: 7ch;
+}
+.collection-controls {
+  position: sticky;
+  top: 72px;
+  z-index: 10;
+  padding: 14px 4vw;
+  background: rgba(16, 13, 10, 0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+.collection-search input {
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  padding: 12px 16px;
+}
+.collection-search input:focus {
+  box-shadow: 0 0 0 3px rgba(220, 162, 78, 0.12);
+}
+.filter-chip {
+  border-radius: 999px;
+  padding-inline: 15px;
+}
+.filter-chip:hover,
+.filter-chip.is-active {
+  background: rgba(220, 162, 78, 0.12);
+}
+.collection-grid {
+  gap: 14px;
+  padding: 14px;
+  background: transparent;
+}
+.perfume-card {
+  padding: 12px 12px 24px;
+  border: 1px solid rgba(238, 229, 214, 0.1);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.055),
+    rgba(255, 255, 255, 0.012)
+  );
+  border-radius: 3px;
+  transition:
+    transform 350ms cubic-bezier(0.2, 0.7, 0.1, 1),
+    border-color 350ms ease,
+    background 350ms ease;
+}
+.perfume-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(220, 162, 78, 0.46);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.018)
+  );
+}
+.perfume-image {
+  border-radius: 2px;
+  background: #20150e;
+}
+.perfume-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.45));
+}
+.perfume-image span {
+  z-index: 1;
+}
+.perfume-meta {
+  padding-top: 18px;
+}
+.perfume-meta h2 {
+  font-size: clamp(28px, 2.4vw, 36px);
+}
+.product-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+.product-title-link:hover {
+  color: var(--gold);
+}
+.card-actions {
+  gap: 14px;
+}
+.favorite-button {
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  color: var(--paper);
+  background: transparent;
+  cursor: pointer;
+}
+.favorite-button:hover,
+.favorite-button.is-favorite {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: rgba(220, 162, 78, 0.1);
+}
+.collection-proof {
+  margin-top: 2px;
+}
+.site-footer {
+  border-top: 1px solid rgba(238, 229, 214, 0.1);
+}
+@media (max-width: 800px) {
+  .site-header {
+    height: 64px;
+  }
+  .collection-controls {
+    top: 64px;
+    padding: 12px 6vw 16px;
+  }
+  .collection-grid {
+    padding: 8px;
+    gap: 8px;
+  }
+  .perfume-card {
+    padding: 8px 8px 22px;
+  }
+  .perfume-card:hover {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .perfume-card,
+  .brand-lockup,
+  .line-cta,
+  .button-primary,
+  .text-link {
+    transition: none;
+  }
+}
+
+/* RAHA house system: a quieter, more authored navigator and new type pairing. */
+:root {
+  --serif: "DM Serif Display", Georgia, serif;
+  --sans: "Manrope", Arial, sans-serif;
+  --nav-bg: rgba(21, 16, 12, 0.86);
+}
+.site-header {
+  height: 76px;
+  margin: 14px clamp(12px, 2vw, 28px) 0;
+  left: 0;
+  right: 0;
+  width: auto;
+  padding: 0 18px;
+  border: 1px solid rgba(238, 229, 214, 0.16);
+  border-radius: 999px;
+  background: var(--nav-bg);
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+.brand-lockup {
+  gap: 10px;
+  letter-spacing: 0.18em;
+}
+.brand-mark {
+  width: 29px;
+  height: 29px;
+  margin-right: 0;
+}
+.brand-word {
+  font-size: 19px;
+  letter-spacing: 0.25em;
+}
+.icon-nav {
+  gap: 4px;
+  margin-left: 0;
+  padding: 4px;
+  border: 1px solid rgba(238, 229, 214, 0.1);
+  border-radius: 999px;
+}
+.icon-nav a {
+  padding: 9px 13px;
+  border-radius: 999px;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  opacity: 0.72;
+  transition:
+    background 200ms ease,
+    color 200ms ease,
+    opacity 200ms ease;
+}
+.icon-nav a:hover,
+.icon-nav a[aria-current="page"] {
+  background: rgba(220, 162, 78, 0.14);
+  color: var(--gold);
+  opacity: 1;
+}
+.header-actions {
+  gap: 8px;
+}
+.header-actions .icon-link {
+  border: 1px solid rgba(220, 162, 78, 0.55);
+  border-radius: 999px;
+  padding: 9px 13px;
+}
+.header-actions .icon-link:hover {
+  background: rgba(220, 162, 78, 0.13);
+}
+.header-actions b {
+  width: 18px;
+  height: 18px;
+}
+.hero {
+  padding-top: 28px;
+}
+.hero h1,
+.collection-hero h1,
+.account-card h1,
+.dashboard h1 {
+  font-weight: 400;
+  letter-spacing: -0.05em;
+}
+.eyebrow {
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+.footer-mark .brand-mark {
+  width: 27px;
+  height: 27px;
+  vertical-align: middle;
+}
+.footer-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+@media (max-width: 800px) {
+  .site-header {
+    height: 60px;
+    margin: 8px 8px 0;
+    padding-inline: 15px;
+  }
+  .brand-mark {
+    width: 25px;
+    height: 25px;
+  }
+  .brand-word {
+    font-size: 16px;
+  }
+  .menu-toggle {
+    display: block;
+  }
+  .icon-nav,
+  .header-actions {
+    display: none;
+  }
+}
+.rating-input button.selected .rating-dot {
+  background: currentColor;
+}

@@ -10,6 +10,11 @@ let products = [],
   cartItems = JSON.parse(localStorage.getItem("raha-cart") || "[]"),
   selectedRating = 0;
 const money = (value) => `$${Number(value || 0).toFixed(0)}`;
+const ratingDots = (rating) =>
+  Array.from(
+    { length: 5 },
+    (_, index) => `<i class="${index < Number(rating) ? "is-on" : ""}"></i>`,
+  ).join("");
 const escapeHTML = (value) =>
   String(value ?? "").replace(
     /[&<>'"]/g,
@@ -50,9 +55,9 @@ function persist() {
 }
 function ratingMarkup(stat) {
   if (!stat.count)
-    return '<span class="rating-summary is-new">New composition</span>';
+    return '<span class="rating-summary is-new">New scent</span>';
   const average = (stat.sum / stat.count).toFixed(1);
-  return `<span class="rating-summary" aria-label="Rated ${average} out of 5 from ${stat.count} reviews"><span class="stars" aria-hidden="true">★★★★★</span> ${average} · ${stat.count} review${stat.count === 1 ? "" : "s"}</span>`;
+  return `<span class="rating-summary" aria-label="Rated ${average} out of 5 from ${stat.count} reviews"><span class="rating-dots" aria-hidden="true">${ratingDots(stat.sum / stat.count)}</span> ${average} · ${stat.count} review${stat.count === 1 ? "" : "s"}</span>`;
 }
 let activeFilter = "all";
 const filterTerms = {
@@ -85,12 +90,22 @@ function renderProducts() {
           const image =
             product.image_url ||
             product.image ||
-            `/media/perfumes/webp/${product.slug}.webp`;
+            `/media/perfumes/${product.slug}.jpg`;
           const soldOut = Number(product.stock) <= 0;
-          return `<article class="perfume-card" data-product="${escapeHTML(product.id || product.slug)}"><div class="perfume-image"><img src="${escapeHTML(image)}" alt="${escapeHTML(product.name)} perfume bottle" loading="lazy" decoding="async"><span>${escapeHTML(product.notes || "Limited edition")}</span>${soldOut ? '<b class="stock-flag">SOLD OUT</b>' : ""}</div><div class="perfume-meta"><div><p class="eyebrow">${escapeHTML(product.tagline)}</p><h2><a class="product-title-link" href="/products/${escapeHTML(product.slug)}.html">${escapeHTML(product.name)}</a></h2></div><strong>${money(product.price)}</strong></div><p class="card-note">${escapeHTML(product.notes || "")}</p><div class="card-actions">${ratingMarkup(stat)}<button class="favorite-button ${window.RAHA_FAVORITES?.isFavorite(product.id) ? "is-favorite" : ""}" data-favorite="${escapeHTML(product.id || product.slug)}" type="button" aria-label="${window.RAHA_FAVORITES?.isFavorite(product.id) ? "Remove" : "Add"} ${escapeHTML(product.name)} ${window.RAHA_FAVORITES?.isFavorite(product.id) ? "from" : "to"} favourites" aria-pressed="${window.RAHA_FAVORITES?.isFavorite(product.id) ? "true" : "false"}">♡</button><button class="text-link add-button" data-add="${escapeHTML(product.id || product.slug)}" type="button" ${soldOut ? "disabled" : ""}>${soldOut ? "Sold out" : "Add to bag"} <span>↗</span></button><button class="text-link review-button" data-review="${escapeHTML(product.id || product.slug)}" type="button">Review</button></div></article>`;
+          return `<article class="perfume-card" data-product="${escapeHTML(product.id || product.slug)}"><div class="perfume-image"><img src="${escapeHTML(image)}" data-fallback="/media/perfumes/${escapeHTML(product.slug)}.jpg" alt="${escapeHTML(product.name)} perfume bottle" loading="lazy" decoding="async"><span>${escapeHTML(product.notes || "Limited edition")}</span>${soldOut ? '<b class="stock-flag">SOLD OUT</b>' : ""}</div><div class="perfume-meta"><div><p class="eyebrow">${escapeHTML(product.tagline)}</p><h2><a class="product-title-link" href="/products/${escapeHTML(product.slug)}.html">${escapeHTML(product.name)}</a></h2></div><strong>${money(product.price)}</strong></div><p class="card-note">${escapeHTML(product.notes || "")}</p><div class="card-actions">${ratingMarkup(stat)}<button class="favorite-button ${window.RAHA_FAVORITES?.isFavorite(product.id) ? "is-favorite" : ""}" data-favorite="${escapeHTML(product.id || product.slug)}" type="button" aria-label="${window.RAHA_FAVORITES?.isFavorite(product.id) ? "Remove" : "Add"} ${escapeHTML(product.name)} ${window.RAHA_FAVORITES?.isFavorite(product.id) ? "from" : "to"} favourites" aria-pressed="${window.RAHA_FAVORITES?.isFavorite(product.id) ? "true" : "false"}"><span class="favourite-mark" aria-hidden="true"></span></button><button class="text-link add-button" data-add="${escapeHTML(product.id || product.slug)}" type="button" ${soldOut ? "disabled" : ""}>${soldOut ? "Sold out" : "Add to your bag"} <span class="arrow-mark" aria-hidden="true"></span></button><button class="text-link review-button" data-review="${escapeHTML(product.id || product.slug)}" type="button">Review</button></div></article>`;
         })
         .join("")
-    : '<p class="collection-empty">No fragrance matches that trace.</p>';
+    : '<p class="collection-empty">Nothing matches that search yet.</p>';
+  grid.querySelectorAll(".perfume-image img").forEach((image) =>
+    image.addEventListener(
+      "error",
+      () => {
+        if (image.dataset.fallback && image.src !== image.dataset.fallback)
+          image.src = image.dataset.fallback;
+      },
+      { once: true },
+    ),
+  );
   grid.querySelectorAll("[data-add]").forEach((button) =>
     button.addEventListener("click", () => {
       const product = products.find(
@@ -144,10 +159,10 @@ function renderCart() {
     ? cartItems
         .map(
           (item) =>
-            `<div class="cart-item"><img src="${escapeHTML(item.image || `/media/perfumes/webp/${item.slug}.webp`)}" alt=""><div><strong>${escapeHTML(item.name)}</strong><small>${money(item.price)} · qty ${item.quantity}</small></div><button class="text-link" data-remove="${escapeHTML(item.id)}" type="button" aria-label="Remove ${escapeHTML(item.name)}">×</button></div>`,
+            `<div class="cart-item"><img src="${escapeHTML(item.image || `/media/perfumes/${item.slug}.jpg`)}" alt=""><div><strong>${escapeHTML(item.name)}</strong><small>${money(item.price)} · qty ${item.quantity}</small></div><button class="text-link" data-remove="${escapeHTML(item.id)}" type="button" aria-label="Remove ${escapeHTML(item.name)}"><span class="remove-mark" aria-hidden="true"></span></button></div>`,
         )
         .join("")
-    : '<p class="body-copy">Your bag is waiting for a first trace.</p>';
+    : '<p class="body-copy">Your bag is ready when you are.</p>';
   document.querySelector("#cart-total").textContent = money(
     cartItems.reduce(
       (sum, item) => sum + Number(item.price || 0) * item.quantity,
@@ -214,7 +229,7 @@ document
       return;
     }
     if (!selectedRating) {
-      message.textContent = "Choose a rating first.";
+      message.textContent = "Choose a rating before sending your note.";
       return;
     }
     const { error } = await client.from("reviews").insert({
@@ -243,7 +258,7 @@ document
       return;
     }
     if (!cartItems.length) {
-      message.textContent = "Add a fragrance before checking out.";
+      message.textContent = "Add a scent before checking out.";
       return;
     }
     const items = cartItems
@@ -253,7 +268,7 @@ document
         quantity: Math.min(10, Math.max(1, Number(item.quantity) || 1)),
       }));
     if (items.length !== cartItems.length) {
-      message.textContent = "Refresh the collection to update your bag.";
+      message.textContent = "Refresh the collection so we can check your bag.";
       return;
     }
     const { data, error } = await client.rpc("place_order", {
@@ -271,7 +286,7 @@ document
     cartItems = [];
     persist();
     event.target.reset();
-    message.textContent = `Order ${order.order_id.slice(0, 8)} placed. We’ll be in touch.`;
+    message.textContent = `Order ${order.order_id.slice(0, 8)} placed. We’ll confirm the details by email.`;
   });
 document
   .querySelector("#collection-search")

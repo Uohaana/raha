@@ -23,11 +23,11 @@ const setMode = (next) => {
   title.innerHTML =
     mode === "signin"
       ? "Stay<br><em>close.</em>"
-      : "Begin<br><em>the trace.</em>";
+      : "Make it<br><em>yours.</em>";
   submit.innerHTML =
     mode === "signin"
-      ? "Sign in <span>↗</span>"
-      : "Create account <span>↗</span>";
+      ? `Sign in <span class="arrow-mark" aria-hidden="true"></span>`
+      : `Create account <span class="arrow-mark" aria-hidden="true"></span>`;
   googleButton.hidden = mode === "signup";
   resetButton.hidden = mode === "signup";
   msg.textContent = "";
@@ -71,8 +71,8 @@ form.onsubmit = async (e) => {
   submit.classList.remove("is-loading");
   submit.innerHTML =
     mode === "signin"
-      ? "Sign in <span>↗</span>"
-      : "Create account <span>↗</span>";
+      ? `Sign in <span class="arrow-mark" aria-hidden="true"></span>`
+      : `Create account <span class="arrow-mark" aria-hidden="true"></span>`;
   if (result.error) {
     msg.textContent = result.error.message;
     return;
@@ -101,13 +101,13 @@ async function loadOrders(user) {
   const box = document.querySelector("#order-history");
   if (error || !data?.length) {
     box.innerHTML =
-      '<p class="body-copy">No orders yet. Your first trace is waiting in the collection.</p>';
+      '<p class="body-copy">No orders yet. Your first scent is waiting in the collection.</p>';
     return;
   }
   box.innerHTML = data
     .map(
       (o) =>
-        `<article class="order-row"><div><strong>Order ${o.id.slice(0, 8)}</strong><small>${new Date(o.created_at).toLocaleDateString()} · ${(o.order_items || []).map((i) => `${i.product_name} × ${i.quantity}`).join(", ")}</small></div><span>${o.status}</span><b>$${Number(o.total).toFixed(0)}</b></article>`,
+        `<article class="order-row"><div><strong>Order ${o.id.slice(0, 8)}</strong><small>${new Date(o.created_at).toLocaleDateString()} · ${(o.order_items || []).map((i) => `${i.product_name} · qty ${i.quantity}`).join(", ")}</small></div><span>${o.status}</span><b>$${Number(o.total).toFixed(0)}</b></article>`,
     )
     .join("");
 }
@@ -128,14 +128,14 @@ async function loadFavorites(user) {
   }
   if (!data?.length) {
     box.innerHTML =
-      '<p class="body-copy">No favourites yet. Tap the heart on any composition to keep it close.</p>';
+      '<p class="body-copy">No favourites yet. Choose the small keep mark on any scent to save it here.</p>';
     return;
   }
   box.innerHTML = data
     .map((row) => {
       const p = row.perfumes;
       if (!p) return "";
-      return `<article class="favorite-card"><a href="/products/${encodeURIComponent(p.slug)}.html"><img src="${window.RAHA_FAVORITES.escape(p.image_url || `/media/perfumes/webp/${p.slug}.webp`)}" alt="${window.RAHA_FAVORITES.escape(p.name)} perfume bottle" loading="lazy"><div><p class="eyebrow">${window.RAHA_FAVORITES.escape(p.tagline)}</p><h3>${window.RAHA_FAVORITES.escape(p.name)}</h3><span>${window.RAHA_FAVORITES.escape(p.notes || "")}</span></div></a><button class="text-link remove-favorite" data-favorite-id="${p.id}" type="button">Remove</button></article>`;
+      return `<article class="favorite-card"><a href="/products/${encodeURIComponent(p.slug)}.html"><img src="${window.RAHA_FAVORITES.escape(p.image_url || `/media/perfumes/${p.slug}.jpg`)}" alt="${window.RAHA_FAVORITES.escape(p.name)} perfume bottle" loading="lazy"><div><p class="eyebrow">${window.RAHA_FAVORITES.escape(p.tagline)}</p><h3>${window.RAHA_FAVORITES.escape(p.name)}</h3><span>${window.RAHA_FAVORITES.escape(p.notes || "")}</span></div></a><button class="text-link remove-favorite" data-favorite-id="${p.id}" type="button">Remove</button></article>`;
     })
     .join("");
   box.querySelectorAll(".remove-favorite").forEach(

@@ -1,0 +1,139 @@
+/* Small, consistent RAHA marks replace text glyphs in interactive controls. */
+.arrow-mark {
+  position: relative;
+  display: inline-block;
+  width: 14px;
+  height: 10px;
+  margin-left: 8px;
+  vertical-align: -1px;
+}
+.arrow-mark::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 11px;
+  border-top: 1px solid currentColor;
+}
+.arrow-mark::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 2px;
+  width: 6px;
+  height: 6px;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  transform: rotate(45deg);
+}
+.arrow-down,
+.arrow-up {
+  width: 11px;
+  height: 16px;
+  margin-left: 0;
+  vertical-align: middle;
+}
+.arrow-down::before,
+.arrow-up::before {
+  left: 5px;
+  top: 1px;
+  width: 1px;
+  height: 12px;
+  border: 0;
+  background: currentColor;
+}
+.arrow-down::after,
+.arrow-up::after {
+  right: 2px;
+  top: 9px;
+  width: 5px;
+  height: 5px;
+  transform: rotate(135deg);
+}
+.arrow-up::after {
+  top: 1px;
+  transform: rotate(-45deg);
+}
+.favourite-mark {
+  position: relative;
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  transform: rotate(45deg);
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  border-radius: 1px 2px 2px 2px;
+  vertical-align: -1px;
+}
+.favourite-mark::before,
+.favourite-mark::after {
+  content: "";
+  position: absolute;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+}
+.favourite-mark::before {
+  width: 8px;
+  height: 8px;
+  left: -5px;
+  top: 0;
+  background: transparent;
+}
+.favourite-mark::after {
+  width: 8px;
+  height: 8px;
+  left: 0;
+  top: -5px;
+  background: transparent;
+}
+.favourite-mark.is-filled,
+.favourite-mark.is-filled::before,
+.favourite-mark.is-filled::after {
+  background: currentColor;
+}
+.rating-dots {
+  display: inline-flex;
+  gap: 3px;
+  vertical-align: middle;
+}
+.rating-dots i,
+.rating-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+.rating-dots i.is-on,
+.rating-dot.selected {
+  background: currentColor;
+}
+.rating-input button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+.remove-mark {
+  position: relative;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+}
+.remove-mark::before,
+.remove-mark::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 1px;
+  width: 1px;
+  height: 13px;
+  background: currentColor;
+}
+.remove-mark::before {
+  transform: rotate(45deg);
+}
+.remove-mark::after {
+  transform: rotate(-45deg);
+}

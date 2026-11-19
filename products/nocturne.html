@@ -11,27 +11,42 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body class="product-page">
     <header class="site-header">
-      <a class="wordmark brand-lockup" href="/" aria-label="RAHA home"
-        ><img class="brand-mark" src="/media/raha-logo-mark.svg" alt="" /><span
-          >RAHA</span
-        ></a
-      >
+      <a class="wordmark brand-lockup" href="/" aria-label="RAHA home">
+        <img class="brand-mark" src="/media/raha-monogram.svg" alt="" />
+        <span class="brand-word">RAHA</span>
+      </a>
       <nav class="icon-nav" aria-label="Primary navigation">
-        <a href="/">Film</a><a href="/collection.html">Collection</a
-        ><a href="/about.html">About</a><a href="/account.html">Account</a>
+        <a href="/" title="The film">Film</a>
+        <a href="/collection.html" title="Collection">Shop scents</a>
+        <a href="/about.html" title="About Yohana">Our house</a>
+        <a href="/account.html" title="Account">Account</a>
       </nav>
       <div class="header-actions">
-        <a class="icon-link bag-link" href="#cart" aria-label="Open bag"
-          ><span>Bag <b id="cart-count">0</b></span></a
+        <a
+          class="icon-link bag-link"
+          href="/collection.html#cart"
+          title="Bag"
+          aria-label="Open bag"
         >
+          <span>Bag</span><b id="cart-count">0</b>
+        </a>
       </div>
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span></span><span></span><span></span
+        ><span class="sr-only">Open menu</span>
+      </button>
     </header>
     <main>
       <section class="product-hero">
@@ -47,7 +62,8 @@
           </div>
           <div class="product-actions">
             <button class="button-primary" id="product-add" type="button">
-              Add to bag <span>↗</span></button
+              Add to bag
+              <span class="arrow-mark" aria-hidden="true"></span></button
             ><button
               class="favorite-button product-favorite"
               id="product-favorite"
@@ -55,31 +71,33 @@
               aria-pressed="false"
               aria-label="Add this fragrance to favourites"
             >
-              ♡
+              <span class="favourite-mark" aria-hidden="true"></span>
             </button>
           </div>
           <a class="text-link product-back" href="/collection.html"
-            >Back to collection <span>↗</span></a
-          >
+            >Back to collection
+            <span class="arrow-mark" aria-hidden="true"></span
+          ></a>
         </div>
         <div class="product-hero-image">
           <img
             id="product-image"
-            src="/media/perfumes/webp/nocturne.webp"
+            src="/media/perfumes/nocturne.jpg"
             alt="Nocturne perfume bottle"
             fetchpriority="high"
           />
         </div>
       </section>
       <section class="product-film-section section-dark">
-        <div class="section-kicker"><span>01</span><span>THE TRACE</span></div>
+        <div class="section-kicker"><span>01</span><span>THE SCENT</span></div>
         <div class="product-film-grid">
           <div>
             <p class="eyebrow">A moving study</p>
             <h2>Let it<br /><em>linger.</em></h2>
             <p class="body-copy">
-              A fragrance is never still. Watch the light move through the
-              composition before it finds the skin.
+              The opening is bright and dry. Give it a few minutes and the
+              darker notes come forward, close to the skin and easy to live
+              with.
             </p>
           </div>
           <div class="product-film-frame media-frame">
@@ -90,7 +108,7 @@
               loop
               playsinline
               preload="metadata"
-              poster="/media/perfumes/webp/nocturne.webp"
+              poster="/media/perfumes/nocturne.jpg"
               aria-label="Abstract RAHA fragrance film"
             >
               <source src="/media/raha-amber-ribbon.mp4" type="video/mp4" />
@@ -121,7 +139,7 @@
         </div>
         <div class="comments-grid">
           <div>
-            <p class="eyebrow">Leave a trace</p>
+            <p class="eyebrow">Tell us what you noticed</p>
             <h2>What stayed<br /><em>with you?</em></h2>
             <form id="comment-form" class="comment-form">
               <p class="eyebrow">
@@ -133,31 +151,31 @@
                   data-comment-rating="1"
                   aria-label="1 star"
                 >
-                  ★</button
+                  <span class="rating-dot" aria-hidden="true"></span></button
                 ><button
                   type="button"
                   data-comment-rating="2"
                   aria-label="2 stars"
                 >
-                  ★</button
+                  <span class="rating-dot" aria-hidden="true"></span></button
                 ><button
                   type="button"
                   data-comment-rating="3"
                   aria-label="3 stars"
                 >
-                  ★</button
+                  <span class="rating-dot" aria-hidden="true"></span></button
                 ><button
                   type="button"
                   data-comment-rating="4"
                   aria-label="4 stars"
                 >
-                  ★</button
+                  <span class="rating-dot" aria-hidden="true"></span></button
                 ><button
                   type="button"
                   data-comment-rating="5"
                   aria-label="5 stars"
                 >
-                  ★
+                  <span class="rating-dot" aria-hidden="true"></span>
                 </button>
               </div>
               <input
@@ -173,7 +191,7 @@
                 required
               ></textarea
               ><button class="button-primary" type="submit">
-                Send comment <span>↗</span>
+                Send comment <span class="arrow-mark" aria-hidden="true"></span>
               </button>
               <p id="comment-message" class="form-error" role="status"></p>
             </form>
@@ -186,11 +204,11 @@
     </main>
     <footer class="site-footer">
       <div class="footer-mark brand-lockup">
-        <img class="brand-mark" src="/media/raha-logo-mark.svg" alt="" /><span
+        <img class="brand-mark" src="/media/raha-monogram.svg" alt="" /><span
           >RAHA</span
         >
       </div>
-      <p>For those who leave a trace.</p>
+      <p>For people who notice the details.</p>
       <div class="footer-links">
         <a href="/">Film</a><a href="/collection.html">Collection</a
         ><a href="/account.html">Account</a>
@@ -204,7 +222,7 @@
       aria-labelledby="cart-title"
     >
       <div class="cart-head">
-        <p class="eyebrow" id="cart-title">Your ritual / bag</p>
+        <p class="eyebrow" id="cart-title">Your bag</p>
         <button id="cart-close" class="text-link" type="button">Close</button>
       </div>
       <div id="cart-items"></div>
@@ -212,7 +230,8 @@
         <span>Estimated total</span><strong id="cart-total">$0</strong>
       </div>
       <p class="cart-security">
-        Final total and stock are rechecked securely when you place the order.
+        We check the final total and availability again when you place your
+        order.
       </p>
       <form id="checkout-form" class="checkout-form">
         <p class="eyebrow">Delivery details</p>
@@ -229,7 +248,7 @@
           maxlength="300"
           required
         /><button class="button-primary" type="submit">
-          Place order <span>↗</span>
+          Place your order <span class="arrow-mark" aria-hidden="true"></span>
         </button>
         <p id="checkout-message" class="form-error" role="status"></p>
       </form>
@@ -240,7 +259,7 @@
         name: "Nocturne",
         tagline: "Black amber / smoked woods",
         price: 145,
-        image: "/media/perfumes/webp/nocturne.webp",
+        image: "/media/perfumes/nocturne.jpg",
         notes: "Saffron \u00b7 amber \u00b7 vetiver",
         stock: 24,
         index: 1,

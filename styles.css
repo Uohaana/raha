@@ -6,8 +6,8 @@
   --gold-soft: #f0c77e;
   --muted: #a29a8b;
   --line: rgba(231, 223, 208, 0.22);
-  --serif: "Cormorant Garamond", Georgia, serif;
-  --sans: "Inter", Arial, sans-serif;
+  --serif: "DM Serif Display", Georgia, serif;
+  --sans: "Manrope", Arial, sans-serif;
 }
 * {
   box-sizing: border-box;

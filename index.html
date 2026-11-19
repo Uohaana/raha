@@ -6,58 +6,41 @@
     <meta name="theme-color" content="#0b0907" />
     <meta
       name="description"
-      content="RAHA — Liquid Gold. A fragrance film held in glass."
+      content="RAHA — A scent with a pulse. A fragrance film held in glass."
     />
-    <title>RAHA — Liquid Gold</title>
+    <title>RAHA — A scent with a pulse</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/humanized-overrides.css" />
+    <link rel="stylesheet" href="/icon-system.css" />
   </head>
   <body>
     <div class="noise" aria-hidden="true"></div>
     <header class="site-header">
-      <a class="wordmark brand-lockup" href="/" aria-label="RAHA home"
-        ><img class="brand-mark" src="/media/raha-logo-mark.svg" alt="" /><span
-          >RAHA</span
-        ></a
-      >
+      <a class="wordmark brand-lockup" href="/" aria-label="RAHA home">
+        <img class="brand-mark" src="/media/raha-monogram.svg" alt="" />
+        <span class="brand-word">RAHA</span>
+      </a>
       <nav class="icon-nav" aria-label="Primary navigation">
-        <a href="/" title="The film" aria-label="The film"
-          ><svg class="nav-icon" viewBox="0 0 24 24">
-            <path d="m8 3 10 9-10 9z" /></svg
-          ><span>Film</span></a
-        ><a href="/collection.html" title="Collection" aria-label="Collection"
-          ><svg class="nav-icon" viewBox="0 0 24 24">
-            <path d="M5 8h14l-1 12H6L5 8Z" />
-            <path d="M9 8a3 3 0 0 1 6 0" /></svg
-          ><span>Collection</span></a
-        ><a href="/about.html" title="About Yohana" aria-label="About Yohana"
-          ><svg class="nav-icon" viewBox="0 0 24 24">
-            <circle cx="12" cy="8" r="3" />
-            <path d="M5 21a7 7 0 0 1 14 0" /></svg
-          ><span>About</span></a
-        ><a href="/account.html" title="Account" aria-label="Account"
-          ><svg class="nav-icon" viewBox="0 0 24 24">
-            <circle cx="12" cy="8" r="3" />
-            <path d="M4 21a8 8 0 0 1 16 0" /></svg
-          ><span>Account</span></a
-        >
+        <a href="/" title="The film">Film</a>
+        <a href="/collection.html" title="Collection">Shop scents</a>
+        <a href="/about.html" title="About Yohana">Our house</a>
+        <a href="/account.html" title="Account">Account</a>
       </nav>
       <div class="header-actions">
         <a
           class="icon-link bag-link"
           href="/collection.html#cart"
           title="Bag"
-          aria-label="Bag"
-          ><svg class="nav-icon" viewBox="0 0 24 24">
-            <path d="M5 8h14l-1 12H6L5 8Z" />
-            <path d="M9 8a3 3 0 0 1 6 0" /></svg
-          ><span>Bag</span></a
+          aria-label="Open bag"
         >
+          <span>Bag</span><b id="cart-count">0</b>
+        </a>
       </div>
       <button
         class="menu-toggle"
@@ -95,17 +78,18 @@
         <div class="hero-light" aria-hidden="true"></div>
         <div class="hero-copy" data-reveal>
           <p class="eyebrow">Eau de parfum / 01</p>
-          <h1 id="hero-title">Liquid<br /><em>Gold.</em></h1>
+          <h1 id="hero-title">A scent<br /><em>with a pulse.</em></h1>
           <p class="hero-intro">
-            A warm, sculptural fragrance that turns the air into an afterimage.
+            Warm spice, polished wood, and the quiet comfort of skin.
           </p>
           <a class="line-cta" data-magnetic href="#film"
-            ><span>Enter the film</span><b>↓</b></a
-          >
+            ><span>See how it wears</span
+            ><b class="arrow-mark arrow-down" aria-hidden="true"></b
+          ></a>
         </div>
         <div class="hero-meta">
           <span>RAHA / 2026</span><span>35° 41′ N · 51° 25′ E</span
-          ><span>Scroll to feel it</span>
+          ><span>Take your time with it</span>
         </div>
         <div class="hero-scroll" aria-hidden="true"><span></span></div>
       </section>
@@ -114,15 +98,15 @@
         <div class="section-kicker"><span>01</span><span>THE FILM</span></div>
         <div class="film-grid">
           <div class="film-copy" data-reveal>
-            <p class="eyebrow">A slow burn</p>
-            <h2>Not a scent.<br /><em>A presence.</em></h2>
+            <p class="eyebrow">Start here</p>
+            <h2>Something you notice.<br /><em>Something that stays.</em></h2>
             <p class="body-copy">
               RAHA opens in a ribbon of saffron and rises through amber, suede,
               and the soft heat of skin. It stays close. Then it doesn’t.
             </p>
             <a class="text-link" href="#notes"
-              >Follow the trail <span>↗</span></a
-            >
+              >See the notes <span class="arrow-mark" aria-hidden="true"></span
+            ></a>
           </div>
           <div class="film-reel media-frame" data-reveal data-depth="0.16">
             <video
@@ -147,8 +131,8 @@
           <span>02</span><span>THE NOTES</span>
         </div>
         <div class="notes-heading" data-reveal>
-          <p class="eyebrow">An olfactive architecture</p>
-          <h2>Three temperatures.<br /><em>One trail.</em></h2>
+          <p class="eyebrow">How the scent is built</p>
+          <h2>Three stages.<br /><em>One skin story.</em></h2>
         </div>
         <div class="notes-list">
           <article class="note-row" data-reveal>
@@ -195,8 +179,8 @@
           </video>
         </div>
         <div class="object-copy" data-reveal>
-          <p class="eyebrow">The object / 50ml</p>
-          <h2>Held in<br /><em>glass.</em></h2>
+          <p class="eyebrow">The bottle / 50ml</p>
+          <h2>Made to be<br /><em>kept close.</em></h2>
           <p class="body-copy">
             A weighty bottle. A black cap. A pool of amber that catches the last
             light in the room.
@@ -211,19 +195,21 @@
             type="button"
             id="discover-button"
           >
-            Discover RAHA <span>↗</span>
+            Meet the collection
+            <span class="arrow-mark" aria-hidden="true"></span>
           </button>
         </div>
       </section>
 
       <section id="story" class="story-section section-paper">
-        <div class="section-kicker"><span>03</span><span>THE STORY</span></div>
+        <div class="section-kicker"><span>03</span><span>THE HOUSE</span></div>
         <div class="story-grid">
           <p class="story-display" data-reveal>
-            “Somewhere between shadow and skin, <em>RAHA begins.</em>”
+            “The right scent does not announce itself.
+            <em>It becomes part of the room.</em>”
           </p>
           <div class="story-copy" data-reveal>
-            <p class="eyebrow">Made for the hour after midnight</p>
+            <p class="eyebrow">Made for the hours you remember</p>
             <p>
               We built RAHA around contrast: a flash of spice against a dark
               room, liquid light against stone, something remembered before it
@@ -231,17 +217,21 @@
             </p>
             <p>Wear it close. Let it find its own distance.</p>
             <a class="text-link dark-link" href="#top"
-              >Back to the beginning <span>↑</span></a
-            >
+              >Return to the beginning
+              <span class="arrow-mark arrow-up" aria-hidden="true"></span
+            ></a>
           </div>
         </div>
       </section>
 
       <footer class="site-footer">
-        <div class="footer-mark"><span class="wordmark-mark">|</span> RAHA</div>
+        <div class="footer-mark">
+          <img class="brand-mark" src="/media/raha-monogram.svg" alt="" />
+          <span>RAHA</span>
+        </div>
         <div>
-          <span class="eyebrow">Liquid Gold / 01</span>
-          <p>For those who leave a trace.</p>
+          <span class="eyebrow">RAHA / 01</span>
+          <p>For people who notice the details.</p>
         </div>
         <div class="footer-links">
           <a href="#film">Film</a><a href="/collection.html">Collection</a

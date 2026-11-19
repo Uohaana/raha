@@ -8,23 +8,44 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/humanized-overrides.css" />
+    <link rel="stylesheet" href="/icon-system.css" />
   </head>
   <body class="admin-page stock-page">
     <header class="site-header">
-      <a class="wordmark brand-lockup" href="/" aria-label="RAHA home"
-        ><img class="brand-mark" src="/media/raha-logo-mark.svg" alt="" /><span
-          >RAHA</span
-        ></a
-      >
+      <a class="wordmark brand-lockup" href="/" aria-label="RAHA home">
+        <img class="brand-mark" src="/media/raha-monogram.svg" alt="" />
+        <span class="brand-word">RAHA</span>
+      </a>
       <nav class="icon-nav" aria-label="Primary navigation">
-        <a href="/">Film</a><a href="/collection.html">Collection</a
-        ><a href="/about.html">About</a><a href="/account.html">Account</a>
+        <a href="/" title="The film">Film</a>
+        <a href="/collection.html" title="Collection">Shop scents</a>
+        <a href="/about.html" title="About Yohana">Our house</a>
+        <a href="/account.html" title="Account">Account</a>
       </nav>
-      <span class="admin-label">STUDIO / STOCK</span>
+      <div class="header-actions">
+        <a
+          class="icon-link bag-link"
+          href="/collection.html#cart"
+          title="Bag"
+          aria-label="Open bag"
+        >
+          <span>Bag</span><b id="cart-count">0</b>
+        </a>
+      </div>
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span></span><span></span><span></span
+        ><span class="sr-only">Open menu</span>
+      </button>
     </header>
     <main class="admin-shell">
       <section id="login-panel" class="admin-login">
@@ -48,7 +69,7 @@
               required
               autocomplete="current-password" /></label
           ><button class="button-primary" type="submit">
-            Sign in <span>↗</span></button
+            Sign in <span class="arrow-mark" aria-hidden="true"></span></button
           ><button class="text-link" id="reset-button" type="button">
             Send password reset email
           </button>
