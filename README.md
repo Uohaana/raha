@@ -1,73 +1,136 @@
 # RAHA — Liquid Gold
 
-RAHA is a cinematic perfume storefront for a collection of sculptural fragrances. It is a static HTML/CSS/JavaScript website backed by Supabase for authentication, products, favourites, reviews, inventory, and checkout.
+### A cinematic perfume storefront for fragrances that leave a trace.
 
-The project is designed for Vercel deployment and is stored in the GitHub repository [`Uohaana/raha`](https://github.com/Uohaana/raha).
+<p align="center">
+  <img width="850" alt="RAHA Liquid Gold perfume storefront" src="public/media/raha-logo-mark.svg" />
+</p>
+
+A premium fragrance experience built with plain HTML, CSS, and JavaScript, backed by Supabase and designed for Vercel. RAHA combines a visual brand film, a 30-perfume collection, customer accounts, favourites, reviews, secure checkout, and a protected inventory studio.
 
 ## Features
 
-- Cinematic RAHA homepage and brand film experience.
-- Collection page with 30 perfume compositions.
-- Search and mood filters for amber, woods, floral, and mineral scents.
-- Individual product pages with:
-  - Product information and notes.
-  - Product imagery and brand film media.
-  - Reviews and ratings.
-  - Favourite button.
-  - Add-to-bag functionality.
-- Persistent shopping bag using browser storage.
-- Supabase-backed authenticated checkout.
-- Customer account dashboard with:
-  - Email/password sign-in.
-  - Email-verified account creation.
-  - Password reset.
-  - Optional Google OAuth support through Supabase.
-  - Order history.
-  - Saved favourite perfumes.
-- Protected admin studio for catalog, orders, and review visibility.
-- Protected stock dashboard for inventory updates and low-stock triage.
-- Responsive mobile navigation and layouts.
-- Security headers configured in `vercel.json`.
-- Supabase row-level security policies for customer-owned and admin-only data.
+- Cinematic homepage with RAHA brand film and Liquid Gold hero presentation
+- Collection of 30 original perfume compositions
+- Search and mood filters for amber, woods, floral, and mineral scents
+- Individual product pages for every perfume
+- Product notes, pricing, stock status, reviews, and ratings
+- Favourite perfumes saved to each customer's account
+- Persistent shopping bag stored in the browser
+- Authenticated checkout with server-side stock and total validation
+- Customer account dashboard with orders and saved favourites
+- Email/password sign-in and email-verified account creation
+- Password reset flow through Supabase Auth
+- Optional Continue with Google authentication
+- Protected admin studio for catalog, orders, and reviews
+- Protected stock page with search, low-stock filtering, and inventory updates
+- Responsive desktop and mobile layouts
+- Security headers configured for Vercel
+- Supabase Row Level Security for customer and admin data
 
-## Project structure
+## Pages
+
+| Page                    | Purpose                                                                  |
+| ----------------------- | ------------------------------------------------------------------------ |
+| `/`                     | RAHA homepage and brand film                                             |
+| `/collection.html`      | Browse, search, filter, and add perfumes to the bag                      |
+| `/products/*.html`      | Individual perfume pages                                                 |
+| `/account.html`         | Sign in, create an account, reset a password, view orders and favourites |
+| `/studio-vault-9x.html` | Protected admin overview                                                 |
+| `/stock.html`           | Protected stock management page                                          |
+
+## Customer Experience
+
+### Account
+
+Existing customers use **Sign in**. New customers use **Create account** and must verify their email before accessing the account dashboard.
+
+After signing in, the account page becomes a personal RAHA dashboard with:
+
+- Order history
+- Saved favourite perfumes
+- Remove-favourite controls
+- Collection links
+- Sign out
+
+Guests can browse normally. When a guest selects a favourite, writes a review, or checks out, RAHA sends them to the account page first.
+
+### Favourites
+
+Every collection card and product page has a heart button. Favourites are stored in Supabase in the `favorites` table and protected so each customer can only read, create, or delete their own favourites.
+
+### Checkout
+
+The shopping bag is stored locally under `raha-cart` so it survives page navigation. The final order is created through the Supabase `place_order` function, which rechecks:
+
+- The customer session
+- Product IDs
+- Product publication status
+- Quantity limits
+- Current stock
+- Shipping details
+- The trusted server-side total
+
+## Admin Studio
+
+The admin area is protected by Supabase Auth and the `admin_profiles` table. Only users with an `admin` or `editor` role receive the Admin navigation link.
+
+The studio provides:
+
+- Published product count
+- Total inventory count
+- Low-stock count
+- Catalog overview
+- Recent orders
+- Customer review overview
+
+The stock page provides:
+
+- Inventory search
+- All, low-stock, and out-of-stock filters
+- Direct stock editing
+- Low-stock indicators
+- Authenticated database updates
+
+The browser interface is not the security boundary. Supabase RLS policies protect the database even if someone manually opens an admin URL.
+
+## Project Structure
 
 ```text
 .
 ├── index.html                 # Homepage and brand film
-├── collection.html            # Collection browsing, filters, cart, and checkout
-├── account.html               # Customer sign-in and account dashboard
-├── products/                  # Generated product detail pages
-├── admin.html                 # Admin route redirect
+├── collection.html            # Collection, cart, reviews, and checkout
+├── account.html               # Customer authentication and account dashboard
+├── products/                  # Individual perfume pages
+├── admin.html                 # Admin route entry point
 ├── studio-vault-9x.html       # Protected admin overview
-├── stock.html                 # Protected inventory dashboard
-├── styles.css                 # Shared visual system and responsive styles
-├── script.js                  # Shared navigation and storefront behavior
-├── favorites.js               # Shared authenticated favourites and admin navigation
-├── account.js                 # Authentication, orders, and account dashboard
-├── collection.js              # Catalog, filters, reviews, cart, and checkout
-├── product-page.js            # Shared product-detail controller
-├── stock.js                   # Protected stock management controller
-├── studio.js                  # Protected admin overview controller
-├── supabase-config.js         # Public Supabase URL, key, and fallback catalog
-├── public/media/              # Product imagery, logo, and video assets
-├── supabase/                  # Database schema and repeatable migrations
-├── manus-routes.json          # Route and asset manifest
-└── vercel.json                # Security headers and deployment configuration
+├── stock.html                 # Protected stock dashboard
+├── styles.css                 # Shared visual system
+├── script.js                  # Shared navigation behavior
+├── favorites.js               # Favourites and authenticated navigation
+├── account.js                 # Account controller
+├── collection.js              # Collection controller
+├── product-page.js            # Product-page controller
+├── stock.js                   # Stock controller
+├── studio.js                  # Admin controller
+├── supabase-config.js         # Public Supabase configuration and fallback catalog
+├── public/media/              # Product images, logo, and video assets
+├── supabase/                  # Database schema and migrations
+├── vercel.json                # Deployment headers and security policy
+└── README.md
 ```
 
-## Requirements
+## Dependencies
 
-- Python 3 for a simple local preview.
-- Node.js and npm for formatting checks.
-- A Supabase project for authentication and database features.
-- A Vercel account for production deployment.
+- `Python 3.10+` for a local static preview
+- `Node.js` and `npm` for formatting checks
+- `Supabase` for Auth, database tables, RLS, reviews, favourites, orders, and stock
+- `Vercel` for deployment
+- Supabase JavaScript client loaded from jsDelivr in the HTML pages
 
-No build step is required for the static storefront.
+No framework or build step is required.
 
-## Run locally
-
-Clone the repository and start a local static server from the project root:
+### Install & Run
 
 ```bash
 git clone https://github.com/Uohaana/raha.git
@@ -75,90 +138,43 @@ cd raha
 python3 -m http.server 3000 --bind 0.0.0.0
 ```
 
-Open the site at:
+Open:
 
 ```text
 http://localhost:3000/
 ```
 
-Useful local routes:
+## Supabase Setup
 
-```text
-/                         Homepage
-/collection.html          Product collection
-/account.html             Customer account
-/products/nocturne.html   Example product page
-/studio-vault-9x.html     Protected admin overview
-/stock.html               Protected inventory page
-```
+Apply the migrations in this order:
 
-The site uses root-relative asset paths because Vercel serves the contents of `public/` at the site root.
+1. `supabase/schema.sql`
+2. `supabase/catalog_30.sql`
+3. `supabase/secure_checkout.sql`
+4. `supabase/optimized_catalog_assets.sql`
+5. `supabase/favorites.sql`
+6. `supabase/private_admin_helper_v4.sql`
+7. `supabase/security_hardening.sql`
+8. `supabase/security_hardening_v2.sql`
 
-## Supabase setup
+The public browser key belongs in `supabase-config.js`. Never put a service-role key, database password, admin password, or OAuth secret in the repository.
 
-The browser configuration is in `supabase-config.js`. The publishable Supabase key may be present in browser code; it is not a secret. Sensitive access is enforced by Supabase Auth and row-level security, not by hiding the publishable key.
+The Supabase project must be active for sign-in, favourites, reviews, orders, checkout, and stock management to work.
 
-Apply the SQL migrations in this general order:
+## Code Quality
 
-1. `supabase/schema.sql` — core catalog, account, review, and order tables.
-2. `supabase/catalog_30.sql` — the 30-product catalog seed.
-3. `supabase/secure_checkout.sql` — secure order placement RPC.
-4. `supabase/optimized_catalog_assets.sql` — optimized product asset paths.
-5. `supabase/favorites.sql` — customer-owned favourites.
-6. `supabase/private_admin_helper_v4.sql` — private admin authorization helper.
-7. `supabase/security_hardening.sql` and `supabase/security_hardening_v2.sql` — security and policy hardening.
+The source is intentionally divided into small controllers instead of large inline scripts:
 
-Review each migration against the current Supabase schema before applying it to an existing production database. Do not commit service-role keys, database passwords, or user passwords to GitHub.
+- `account.js` handles authentication, reset emails, orders, and favourites
+- `collection.js` handles catalog loading, filters, reviews, cart, and checkout
+- `product-page.js` keeps all product pages consistent
+- `stock.js` handles protected inventory management
+- `studio.js` handles the protected admin overview
+- `favorites.js` shares session, favourites, and admin-navigation behavior
 
-### Authentication behavior
+HTML, JavaScript, CSS, JSON, Markdown, and SQL are formatted for readability. User-controlled values are escaped before being rendered into HTML, and slow Supabase requests have bounded fallbacks so they do not block the storefront.
 
-- Existing customers use **Sign in**.
-- New customers use **Create account** and must confirm their email.
-- Password reset uses Supabase Auth email delivery.
-- Google sign-in appears when the provider is configured in Supabase Auth.
-- The Admin navigation link appears only for authenticated users with an `admin` or `editor` record in `admin_profiles`.
-
-The Supabase project must be active for authentication, favourites, orders, stock, and reviews to work.
-
-## Admin workflows
-
-Admin pages are intentionally not included in the public primary navigation for signed-out visitors.
-
-- `/studio-vault-9x.html` displays catalog, stock, order, and review summaries.
-- `/stock.html` supports searching, filtering, and updating inventory.
-- Admin access is controlled by Supabase Auth and `admin_profiles` roles.
-- Inventory updates are protected by database policies; the UI is not the security boundary.
-
-Create or repair admin access through Supabase Auth and SQL migrations. Never put an admin password in source code or a README.
-
-## Checkout behavior
-
-The client stores the current bag in `localStorage` under `raha-cart`. Before an order is created, the Supabase `place_order` RPC rechecks:
-
-- The authenticated customer session.
-- The submitted product IDs.
-- Quantity limits.
-- Published product status.
-- Current inventory.
-- Shipping name and address.
-- The server-calculated total.
-
-The browser does not determine the final trusted order total.
-
-## Code quality
-
-The codebase is intentionally split into small, named modules instead of large inline scripts:
-
-- `favorites.js` — shared authentication state, favourites, and admin navigation.
-- `account.js` — sign-in, sign-up, reset, orders, and account dashboard.
-- `collection.js` — product loading, filters, reviews, favourites, cart, and checkout.
-- `product-page.js` — shared behavior for all product detail pages.
-- `stock.js` — authenticated stock loading and updates.
-- `studio.js` — authenticated admin overview.
-
-Source formatting uses Prettier for HTML, JavaScript, CSS, JSON, and Markdown. PostgreSQL migrations are formatted separately. User-controlled content is escaped before being inserted into HTML, and page loading has bounded fallbacks so slow backend requests do not block the storefront.
-
-## Validation commands
+## Checks
 
 Check JavaScript syntax:
 
@@ -172,17 +188,15 @@ Check formatting:
 npx prettier@3.6.2 --check "*.html" "products/*.html" "*.js" "*.css" "*.json" "*.md"
 ```
 
-Check whitespace errors:
+Check Git whitespace errors:
 
 ```bash
 git diff --check
 ```
 
-Run a local browser smoke test after starting the local server. Verify the homepage, collection, account, product detail, stock, and admin routes.
+## Deploy to Vercel
 
-## Deployment to Vercel
-
-Import the GitHub repository into Vercel:
+Import the repository:
 
 ```text
 https://vercel.com/new/import?s=https://github.com/Uohaana/raha
@@ -190,39 +204,39 @@ https://vercel.com/new/import?s=https://github.com/Uohaana/raha
 
 Recommended settings:
 
-- Repository: `Uohaana/raha`
-- Production branch: `main`
-- Project name: `raha-liquid-gold`
-- Root directory: `/`
-- Framework preset: Other
-- Build command: leave empty
-- Output directory: leave empty
+| Setting           | Value              |
+| ----------------- | ------------------ |
+| Repository        | `Uohaana/raha`     |
+| Production branch | `main`             |
+| Project name      | `raha-liquid-gold` |
+| Root directory    | `/`                |
+| Framework         | Other              |
+| Build command     | Empty              |
+| Output directory  | Empty              |
 
-After deployment, confirm that:
+## Security
 
-- `/` loads the homepage.
-- `/collection.html` displays the catalog.
-- `/account.html` loads without JavaScript errors.
-- `/products/nocturne.html` loads a product page.
-- `/stock.html` remains authentication-gated.
-- Supabase Auth redirects use the deployed domain.
-- The Supabase project is active.
+`vercel.json` configures:
 
-## Security notes
+- `X-Content-Type-Options: nosniff`
+- `X-Frame-Options: DENY`
+- Strict referrer policy
+- Restricted browser permissions
+- Content Security Policy
+- Immutable caching for media assets
 
-The repository includes security headers for content type protection, clickjacking protection, referrer control, permissions restrictions, and a Content Security Policy. Supabase RLS remains the primary authorization layer.
+Supabase RLS remains the main authorization layer. Admin pages are protected by authenticated role checks and database policies.
 
-Never commit:
+## Want Your Own RAHA Version?
 
-- Supabase service-role keys.
-- Database passwords.
-- Admin passwords.
-- OAuth client secrets.
-- Access tokens.
-- Customer personal data.
+Change the catalog in `supabase/catalog_30.sql` and the fallback catalog in `supabase-config.js`. Add product imagery under `public/media/perfumes/`, then create a product page under `products/` using the existing page structure.
 
-If credentials have ever been committed, rotate them immediately in the relevant provider.
+Keep the same product slug in the catalog, image filename, and product-page URL so the collection links and Supabase records continue to match.
 
-## License and project note
+## Project Note
 
 RAHA is a portfolio demonstration and noncommercial fragrance-store concept. Product names, imagery, copy, and visual direction are original project assets for this implementation.
+
+## Repository
+
+[GitHub — Uohaana/raha](https://github.com/Uohaana/raha)
